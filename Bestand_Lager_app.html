@@ -18,33 +18,43 @@
     header {
       background: #0b5ed7;
       color: #fff;
-      padding: 12px 16px;
+      padding: 14px 20px;
       text-align: center;
       font-weight: 600;
       letter-spacing: 0.5px;
+      font-size: 18px;
     }
     main {
-      max-width: 1000px;
-      margin: 16px auto 32px;
-      padding: 0 12px;
+      max-width: 1200px;
+      margin: 16px auto 24px;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: minmax(360px, 420px) 1fr;
+      grid-gap: 16px;
+    }
+    .full-width {
+      grid-column: 1 / -1;
     }
     .card {
       background: #fff;
       border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
     .card h2 {
       margin-top: 0;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-size: 18px;
     }
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 8px 12px;
-      margin-bottom: 12px;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 10px;
+      margin-bottom: 10px;
+    }
+    .form-grid .col-full {
+      grid-column: 1 / -1;
     }
     label {
       font-size: 13px;
@@ -60,6 +70,7 @@
       border-radius: 4px;
       border: 1px solid #ccd0d5;
       font-size: 14px;
+      background: #fff;
     }
     input[type="number"] {
       -moz-appearance: textfield;
@@ -70,14 +81,16 @@
       margin: 0;
     }
     button {
-      padding: 8px 14px;
+      padding: 8px 13px;
       border-radius: 4px;
       border: none;
       font-size: 14px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
+      text-align: center;
     }
     button.primary {
       background: #0b5ed7;
@@ -92,7 +105,7 @@
       color: #fff;
     }
     button:active {
-      transform: scale(0.98);
+      transform: scale(0.97);
     }
     .actions {
       display: flex;
@@ -118,7 +131,7 @@
       background: #f0f2f5;
     }
     th, td {
-      padding: 6px 8px;
+      padding: 6px 6px;
       border-bottom: 1px solid #e4e6eb;
       text-align: left;
       vertical-align: middle;
@@ -147,146 +160,136 @@
       color: #666;
       margin-top: 4px;
     }
-
     .platz-qr-box {
-      margin-top: 8px;
-      text-align: center;
+      margin-top: 6px;
+    }
+    .platz-qr-box button {
+      margin: 2px 4px 2px 0;
     }
     .platz-qr-box img {
       margin-top: 6px;
-      max-width: 200px;
+      max-width: 220px;
       width: 100%;
       height: auto;
       border-radius: 4px;
       background: #fff;
       padding: 4px;
+      border: 1px solid #e4e6eb;
     }
   </style>
 </head>
 <body>
   <header>
-    Bestand Lager – ETS (PC-Version ohne Scanner)
+    Bestand Lager – ETS (PC-Version)
   </header>
 
   <main>
-    <!-- BUCHUNGSFORMULAR -->
-    <section class="card">
-      <h2>Buchung erfassen</h2>
-      <form id="bookingForm">
-        <div class="form-grid">
-          <!-- LAGERPLATZ -->
-          <div>
-            <label for="lagerplatz">Lagerplatz</label>
-            <input id="lagerplatz" type="text" placeholder="z.B. R01-A-01 oder Kommission Maier" required />
-            <div class="platz-qr-box">
-              <button type="button" class="secondary" id="showPlaceQrBtn">QR für Lagerplatz anzeigen</button>
-              <div id="platzQrContainer"></div>
+    <!-- LINKER BEREICH: Buchung & Suche -->
+    <section>
+      <div class="card">
+        <h2>Buchung erfassen</h2>
+        <form id="bookingForm">
+          <div class="form-grid">
+            <div class="col-full">
+              <label for="lagerplatz">Lagerplatz</label>
+              <input id="lagerplatz" type="text" placeholder="z.B. R01-A-01 oder Kommission Maier" required />
+              <div class="platz-qr-box">
+                <button type="button" class="secondary" id="showPlaceQrBtn">QR für Lagerplatz anzeigen</button>
+                <button type="button" class="secondary" id="printPlaceLabelBtn">Etikett drucken</button>
+                <div id="platzQrContainer"></div>
+              </div>
+            </div>
+
+            <div>
+              <label for="artikelnummer">Artikelnummer</label>
+              <input id="artikelnummer" type="text" placeholder="Artikelnummer / EAN (mit Handscanner)" required />
+            </div>
+
+            <div>
+              <label for="bezeichnung">Bezeichnung</label>
+              <input id="bezeichnung" type="text" placeholder="z.B. ABB S203 C16" />
+            </div>
+
+            <div>
+              <label for="menge">Menge</label>
+              <input id="menge" type="number" min="0" step="1" required />
+            </div>
+
+            <div>
+              <label for="buchungstyp">Buchungstyp</label>
+              <select id="buchungstyp" required>
+                <option value="Zugang">Zugang (+)</option>
+                <option value="Abgang">Abgang (–)</option>
+                <option value="Inventur">Inventur (Bestand setzen)</option>
+              </select>
+            </div>
+
+            <div class="col-full">
+              <label for="referenz">Referenz / Kommission</label>
+              <input id="referenz" type="text" placeholder="z.B. Kommission Maier, Lieferschein" />
             </div>
           </div>
 
-          <!-- ARTIKELNUMMER -->
-          <div>
-            <label for="artikelnummer">Artikelnummer</label>
-            <input id="artikelnummer" type="text" placeholder="Artikelnummer / EAN" required />
+          <div class="actions">
+            <button type="submit" class="primary">Buchen</button>
+            <button type="button" class="secondary" id="resetFormBtn">Formular leeren</button>
           </div>
+          <div class="footer-note">
+            Tipp: Cursor ins Feld „Artikelnummer“ setzen und dann mit dem Handscanner scannen.
+            Daten werden lokal im Browser gespeichert (localStorage).
+          </div>
+        </form>
+      </div>
 
-          <!-- BEZEICHNUNG -->
-          <div>
-            <label for="bezeichnung">Bezeichnung</label>
-            <input id="bezeichnung" type="text" placeholder="z.B. ABB S203 C16" />
-          </div>
-
-          <!-- MENGE -->
-          <div>
-            <label for="menge">Menge</label>
-            <input id="menge" type="number" min="0" step="1" required />
-          </div>
-
-          <!-- BUCHUNGSTYP -->
-          <div>
-            <label for="buchungstyp">Buchungstyp</label>
-            <select id="buchungstyp" required>
-              <option value="Zugang">Zugang (+)</option>
-              <option value="Abgang">Abgang (–)</option>
-              <option value="Inventur">Inventur (Bestand setzen)</option>
-            </select>
-          </div>
-
-          <!-- REFERENZ -->
-          <div>
-            <label for="referenz">Referenz / Kommission</label>
-            <input id="referenz" type="text" placeholder="z.B. Kommission Maier, Lieferschein-Nr." />
-          </div>
+      <div class="card">
+        <h2>Bestand &amp; Suche</h2>
+        <div class="search-row">
+          <input id="searchInput" type="text" placeholder="Suche nach Artikelnummer, Bezeichnung oder Lagerplatz..." />
+          <button type="button" class="secondary" id="clearSearchBtn">Suche löschen</button>
         </div>
+        <div class="actions" style="margin-top:10px;">
+          <button type="button" class="secondary" id="exportCsvBtn">Als CSV für Excel exportieren</button>
+          <button type="button" class="danger" id="clearAllBtn">Alle Daten löschen</button>
+        </div>
+      </div>
+    </section>
 
-        <div class="actions">
-          <button type="submit" class="primary">Buchen</button>
-          <button type="button" class="secondary" id="resetFormBtn">Formular leeren</button>
+    <!-- RECHTER BEREICH: Tabelle -->
+    <section class="full-width">
+      <div class="card">
+        <h2>Aktueller Bestand</h2>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Lagerplatz</th>
+                <th>Artikelnummer</th>
+                <th>Bezeichnung</th>
+                <th class="qty">Menge</th>
+                <th>Letzte Referenz</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody"></tbody>
+          </table>
         </div>
         <div class="footer-note">
-          Daten werden im Browser gespeichert (localStorage) und gehen nicht verloren, wenn du die Seite neu lädst.
+          Hinweis: Bei <span class="tag">Inventur</span> wird der Bestand direkt auf die eingegebene Menge gesetzt.
         </div>
-      </form>
-    </section>
-
-    <!-- SUCHEN / EXPORT -->
-    <section class="card">
-      <h2>Bestand &amp; Suche</h2>
-      <div class="search-row">
-        <input id="searchInput" type="text" placeholder="Suche nach Artikelnummer, Bezeichnung oder Lagerplatz..." />
-        <button type="button" class="secondary" id="clearSearchBtn">Suche löschen</button>
-      </div>
-      <div class="actions" style="margin-top:10px;">
-        <button type="button" class="secondary" id="exportCsvBtn">Als CSV für Excel exportieren</button>
-        <button type="button" class="danger" id="clearAllBtn">Alle Daten löschen</button>
-      </div>
-    </section>
-
-    <!-- TABELLE -->
-    <section class="card">
-      <h2>Aktueller Bestand</h2>
-      <div style="overflow-x:auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Lagerplatz</th>
-              <th>Artikelnummer</th>
-              <th>Bezeichnung</th>
-              <th class="qty">Menge</th>
-              <th>Letzte Referenz</th>
-            </tr>
-          </thead>
-          <tbody id="inventoryTableBody">
-            <!-- Zeilen werden per JS gefüllt -->
-          </tbody>
-        </table>
-      </div>
-      <div class="footer-note">
-        Hinweis: Die App rechnet Bestände aus allen Buchungen. Bei <span class="tag">Inventur</span> wird der Bestand direkt
-        auf die eingegebene Menge gesetzt.
       </div>
     </section>
   </main>
 
   <script>
     (function () {
-      const STORAGE_KEY = "bestandLagerData_v1_pc";
+      const STORAGE_KEY = "bestandLagerData_pc_v1";
       let inventory = [];
 
-      // ---- Lager-Daten aus localStorage ----
       function loadFromStorage() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) {
-            inventory = [];
-            return;
-          }
+          if (!raw) { inventory = []; return; }
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) {
-            inventory = parsed;
-          } else {
-            inventory = [];
-          }
+          inventory = Array.isArray(parsed) ? parsed : [];
         } catch (e) {
           console.error("Fehler beim Laden aus localStorage", e);
           inventory = [];
@@ -297,7 +300,6 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(inventory));
       }
 
-      // ---- Tabelle rendern ----
       function renderTable(filterText = "") {
         const tbody = document.getElementById("inventoryTableBody");
         tbody.innerHTML = "";
@@ -311,7 +313,7 @@
             }
             return a.lagerplatz.localeCompare(b.lagerplatz, "de");
           })
-          .filter((item) => {
+          .filter(item => {
             if (!ft) return true;
             return (
               (item.lagerplatz || "").toLowerCase().includes(ft) ||
@@ -320,7 +322,7 @@
             );
           });
 
-        rows.forEach((item) => {
+        rows.forEach(item => {
           const tr = document.createElement("tr");
 
           const tdPlatz = document.createElement("td");
@@ -348,13 +350,11 @@
         });
       }
 
-      // ---- Bestand berechnen / anpassen ----
       function upsertInventory({ lagerplatz, artikelnummer, bezeichnung, buchungstyp, menge, referenz }) {
         const key = (lagerplatz || "").trim().toLowerCase() + "§" + (artikelnummer || "").trim().toLowerCase();
         let existing = inventory.find(
-          (x) =>
-            (x.lagerplatz || "").trim().toLowerCase() + "§" +
-            (x.artikelnummer || "").trim().toLowerCase() === key
+          x => ((x.lagerplatz || "").trim().toLowerCase() + "§" +
+                (x.artikelnummer || "").trim().toLowerCase()) === key
         );
 
         if (buchungstyp === "Inventur") {
@@ -397,7 +397,6 @@
         saveToStorage();
       }
 
-      // ---- CSV-Export ----
       function exportCsv() {
         if (!inventory.length) {
           alert("Keine Daten zum Exportieren.");
@@ -406,7 +405,7 @@
         const header = ["Artikelnummer", "Bezeichnung", "Lagerplatz", "Menge", "Letzte Referenz"];
         const lines = [header.join(";")];
 
-        inventory.forEach((item) => {
+        inventory.forEach(item => {
           const row = [
             (item.artikelnummer || "").replace(/;/g, ","),
             (item.bezeichnung || "").replace(/;/g, ","),
@@ -423,7 +422,7 @@
         const now = new Date();
         const isoDate = now.toISOString().slice(0, 10);
         a.href = url;
-        a.download = "bestand_lager_" + isoDate + ".csv";
+        a.download = "bestand_lager_pc_" + isoDate + ".csv";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -437,7 +436,6 @@
         renderTable(document.getElementById("searchInput").value);
       }
 
-      // ---- QR für Lagerplatz erzeugen ----
       function showPlaceQr() {
         const platz = document.getElementById("lagerplatz").value.trim();
         const container = document.getElementById("platzQrContainer");
@@ -446,16 +444,73 @@
           alert("Bitte zuerst einen Lagerplatz eingeben (z.B. Kommission Maier).");
           return;
         }
-        const payload = platz;
         const img = document.createElement("img");
         img.alt = "QR-Code für Lagerplatz";
         img.src =
-          "https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=" +
-          encodeURIComponent(payload);
+          "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+          encodeURIComponent(platz);
         container.appendChild(img);
       }
 
-      // ---- Initialisierung ----
+      function printPlaceLabel() {
+        const platz = document.getElementById("lagerplatz").value.trim();
+        if (!platz) {
+          alert("Bitte zuerst einen Lagerplatz eingeben (z.B. R01-A-01 oder Kommission Maier).");
+          return;
+        }
+
+        const qrUrl =
+          "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=" +
+          encodeURIComponent(platz);
+
+        const win = window.open("", "_blank");
+        if (!win) {
+          alert("Popup blockiert. Bitte Popups für diese Seite erlauben.");
+          return;
+        }
+
+        win.document.write(`
+          <!DOCTYPE html>
+          <html lang="de">
+          <head>
+            <meta charset="UTF-8" />
+            <title>Etikett ${platz}</title>
+            <style>
+              body {
+                margin: 0;
+                padding: 20px;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                text-align: center;
+              }
+              .label {
+                display: inline-block;
+                padding: 10px 20px;
+              }
+              img {
+                width: 200px;
+                height: 200px;
+              }
+              .text {
+                margin-top: 10px;
+                font-size: 22px;
+                font-weight: 700;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="label">
+              <img src="${qrUrl}" alt="QR ${platz}" />
+              <div class="text">${platz}</div>
+            </div>
+            <script>
+              window.print();
+            </script>
+          </body>
+          </html>
+        `);
+        win.document.close();
+      }
+
       document.addEventListener("DOMContentLoaded", () => {
         loadFromStorage();
         renderTable();
@@ -507,8 +562,8 @@
 
         document.getElementById("exportCsvBtn").addEventListener("click", exportCsv);
         document.getElementById("clearAllBtn").addEventListener("click", clearAllData);
-
         document.getElementById("showPlaceQrBtn").addEventListener("click", showPlaceQr);
+        document.getElementById("printPlaceLabelBtn").addEventListener("click", printPlaceLabel);
       });
     })();
   </script>
