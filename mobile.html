@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>ETS Lager App – Mobile</title>
+  <title>ETS Lager App – PC-Version</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * {
@@ -18,33 +18,37 @@
     header {
       background: #0b5ed7;
       color: #fff;
-      padding: 12px 16px;
-      text-align: center;
+      padding: 14px 24px;
+      font-size: 20px;
       font-weight: 600;
-      letter-spacing: 0.5px;
     }
     main {
-      max-width: 900px;
-      margin: 12px auto 24px;
-      padding: 0 10px;
+      max-width: 1200px;
+      margin: 16px auto 32px;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: minmax(340px, 420px) minmax(0, 1fr);
+      gap: 16px;
     }
     .card {
       background: #fff;
       border-radius: 8px;
-      padding: 14px;
+      padding: 14px 16px;
       margin-bottom: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
     .card h2 {
-      margin-top: 0;
-      margin-bottom: 10px;
+      margin: 0 0 10px;
       font-size: 18px;
     }
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 8px 10px;
       margin-bottom: 10px;
+    }
+    .form-grid > div {
+      min-width: 0;
     }
     label {
       font-size: 13px;
@@ -111,6 +115,7 @@
     }
     .search-row input[type="text"] {
       flex: 1;
+      min-width: 160px;
     }
     table {
       width: 100%;
@@ -169,106 +174,115 @@
       background: #fff;
       padding: 4px;
     }
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    ETS Lager App – Mobile (ohne Kamera)
+    ETS Lager App – PC-Version (ohne Kamera)
   </header>
 
   <main>
-    <section class="card">
-      <h2>Buchung erfassen</h2>
-      <form id="bookingForm">
-        <div class="form-grid">
-          <div>
-            <label for="lagerplatz">Lagerplatz</label>
-            <input id="lagerplatz" type="text" placeholder="z.B. R01-A-01 oder Kommission Maier" required />
-            <div class="platz-qr-box">
-              <button type="button" class="secondary" id="showPlaceQrBtn">QR für Lagerplatz anzeigen</button>
-              <button type="button" class="secondary" id="printPlaceLabelBtn">Etikett drucken</button>
-              <div id="platzQrContainer"></div>
+    <section>
+      <div class="card">
+        <h2>Buchung erfassen</h2>
+        <form id="bookingForm">
+          <div class="form-grid">
+            <div>
+              <label for="lagerplatz">Lagerplatz</label>
+              <input id="lagerplatz" type="text" placeholder="z.B. R01-A-01 oder Kommission Maier" required />
+              <div class="platz-qr-box">
+                <button type="button" class="secondary" id="showPlaceQrBtn">QR für Lagerplatz anzeigen</button>
+                <button type="button" class="secondary" id="printPlaceLabelBtn">Etikett drucken</button>
+                <div id="platzQrContainer"></div>
+              </div>
+            </div>
+
+            <div>
+              <label for="artikelnummer">Artikelnummer</label>
+              <input id="artikelnummer" type="text" placeholder="Artikelnummer / EAN (Scanner/Tastatur)" required />
+            </div>
+
+            <div>
+              <label for="bezeichnung">Bezeichnung</label>
+              <input id="bezeichnung" type="text" placeholder="z.B. ABB S203 C16" />
+            </div>
+
+            <div>
+              <label for="menge">Menge</label>
+              <input id="menge" type="number" min="0" step="1" required />
+            </div>
+
+            <div>
+              <label for="buchungstyp">Buchungstyp</label>
+              <select id="buchungstyp" required>
+                <option value="Zugang">Zugang (+)</option>
+                <option value="Abgang">Abgang (–)</option>
+                <option value="Inventur">Inventur (Bestand setzen)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="referenz">Referenz / Kommission</label>
+              <input id="referenz" type="text" placeholder="z.B. Kommission Maier, Lieferschein" />
             </div>
           </div>
 
-          <div>
-            <label for="artikelnummer">Artikelnummer</label>
-            <input id="artikelnummer" type="text" placeholder="Artikelnummer / EAN (mit Handscanner)" required />
+          <div class="actions">
+            <button type="submit" class="primary">Buchen</button>
+            <button type="button" class="secondary" id="resetFormBtn">Formular leeren</button>
           </div>
+          <div class="footer-note">
+            Tipp: Cursor ins Feld „Artikelnummer“ setzen und dann mit Handscanner oder Tastatur erfassen.
+            Daten werden lokal im Browser gespeichert (localStorage).
+          </div>
+        </form>
+      </div>
 
-          <div>
-            <label for="bezeichnung">Bezeichnung</label>
-            <input id="bezeichnung" type="text" placeholder="z.B. ABB S203 C16" />
-          </div>
-
-          <div>
-            <label for="menge">Menge</label>
-            <input id="menge" type="number" min="0" step="1" required />
-          </div>
-
-          <div>
-            <label for="buchungstyp">Buchungstyp</label>
-            <select id="buchungstyp" required>
-              <option value="Zugang">Zugang (+)</option>
-              <option value="Abgang">Abgang (–)</option>
-              <option value="Inventur">Inventur (Bestand setzen)</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="referenz">Referenz / Kommission</label>
-            <input id="referenz" type="text" placeholder="z.B. Kommission Maier, Lieferschein" />
-          </div>
+      <div class="card">
+        <h2>Bestand &amp; Suche</h2>
+        <div class="search-row">
+          <input id="searchInput" type="text" placeholder="Suche nach Artikelnummer, Bezeichnung oder Lagerplatz..." />
+          <button type="button" class="secondary" id="clearSearchBtn">Suche löschen</button>
         </div>
+        <div class="actions" style="margin-top:10px;">
+          <button type="button" class="secondary" id="exportCsvBtn">Als CSV für Excel exportieren</button>
+          <button type="button" class="danger" id="clearAllBtn">Alle Daten löschen</button>
+        </div>
+      </div>
+    </section>
 
-        <div class="actions">
-          <button type="submit" class="primary">Buchen</button>
-          <button type="button" class="secondary" id="resetFormBtn">Formular leeren</button>
+    <section>
+      <div class="card">
+        <h2>Aktueller Bestand</h2>
+        <div style="overflow-x:auto; max-height: 70vh; overflow-y:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Lagerplatz</th>
+                <th>Artikelnummer</th>
+                <th>Bezeichnung</th>
+                <th class="qty">Menge</th>
+                <th>Letzte Referenz</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody"></tbody>
+          </table>
         </div>
         <div class="footer-note">
-          Tipp: Cursor ins Feld „Artikelnummer“ setzen und dann mit dem Handscanner scannen.
-          Daten werden lokal im Browser gespeichert (localStorage).
+          Hinweis: Bei <span class="tag">Inventur</span> wird der Bestand direkt auf die eingegebene Menge gesetzt.
         </div>
-      </form>
-    </section>
-
-    <section class="card">
-      <h2>Bestand &amp; Suche</h2>
-      <div class="search-row">
-        <input id="searchInput" type="text" placeholder="Suche nach Artikelnummer, Bezeichnung oder Lagerplatz..." />
-        <button type="button" class="secondary" id="clearSearchBtn">Suche löschen</button>
-      </div>
-      <div class="actions" style="margin-top:10px;">
-        <button type="button" class="secondary" id="exportCsvBtn">Als CSV für Excel exportieren</button>
-        <button type="button" class="danger" id="clearAllBtn">Alle Daten löschen</button>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Aktueller Bestand</h2>
-      <div style="overflow-x:auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Lagerplatz</th>
-              <th>Artikelnummer</th>
-              <th>Bezeichnung</th>
-              <th class="qty">Menge</th>
-              <th>Letzte Referenz</th>
-            </tr>
-          </thead>
-          <tbody id="inventoryTableBody"></tbody>
-        </table>
-      </div>
-      <div class="footer-note">
-        Hinweis: Bei <span class="tag">Inventur</span> wird der Bestand direkt auf die eingegebene Menge gesetzt.
       </div>
     </section>
   </main>
 
   <script>
     (function () {
-      const STORAGE_KEY = "bestandLagerData_mobile_noScanner_v1";
+      const STORAGE_KEY = "bestandLagerData_mobile_noScanner_v1"; // gleich wie Mobile, damit Logik identisch bleibt
       let inventory = [];
 
       function loadFromStorage() {
@@ -373,13 +387,13 @@
               menge: startQty,
               letzteReferenz: referenz || ""
             };
+            inventory.push(existing);
           } else {
             const newQty = (existing.menge || 0) + delta;
             existing.menge = newQty < 0 ? 0 : newQty;
             if (bezeichnung) existing.bezeichnung = bezeichnung;
             existing.letzteReferenz = referenz || existing.letzteReferenz;
           }
-          if (!inventory.includes(existing)) inventory.push(existing);
         }
         saveToStorage();
       }
@@ -409,7 +423,7 @@
         const now = new Date();
         const isoDate = now.toISOString().slice(0, 10);
         a.href = url;
-        a.download = "bestand_lager_mobile_" + isoDate + ".csv";
+        a.download = "bestand_lager_pc_" + isoDate + ".csv";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
