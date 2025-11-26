@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Bestand Lager – ETS</title>
+  <title>ETS Lager App – Mobile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * {
@@ -24,27 +24,27 @@
       letter-spacing: 0.5px;
     }
     main {
-      max-width: 1000px;
-      margin: 16px auto 32px;
-      padding: 0 12px;
+      max-width: 900px;
+      margin: 12px auto 24px;
+      padding: 0 10px;
     }
     .card {
       background: #fff;
       border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
     .card h2 {
       margin-top: 0;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-size: 18px;
     }
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 8px 12px;
-      margin-bottom: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 8px 10px;
+      margin-bottom: 10px;
     }
     label {
       font-size: 13px;
@@ -60,6 +60,7 @@
       border-radius: 4px;
       border: 1px solid #ccd0d5;
       font-size: 14px;
+      background: #fff;
     }
     input[type="number"] {
       -moz-appearance: textfield;
@@ -70,14 +71,16 @@
       margin: 0;
     }
     button {
-      padding: 8px 14px;
+      padding: 8px 13px;
       border-radius: 4px;
       border: none;
       font-size: 14px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
+      text-align: center;
     }
     button.primary {
       background: #0b5ed7;
@@ -92,7 +95,7 @@
       color: #fff;
     }
     button:active {
-      transform: scale(0.98);
+      transform: scale(0.97);
     }
     .actions {
       display: flex;
@@ -118,7 +121,7 @@
       background: #f0f2f5;
     }
     th, td {
-      padding: 6px 8px;
+      padding: 6px 6px;
       border-bottom: 1px solid #e4e6eb;
       text-align: left;
       vertical-align: middle;
@@ -147,52 +150,8 @@
       color: #666;
       margin-top: 4px;
     }
-
-    /* Felder mit Scan-Buttons nebeneinander */
-    .inline-field {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-    .inline-field input[type="text"] {
-      flex: 1;
-    }
-
-    /* Scanner-Overlay */
-    .scanner-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-    .scanner-inner {
-      background: #000;
-      padding: 12px;
-      border-radius: 8px;
-      width: 100%;
-      max-width: 480px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      align-items: stretch;
-    }
-    #scannerVideo {
-      width: 100%;
-      border-radius: 4px;
-      background: #000;
-    }
-    .scanner-hint {
-      color: #fff;
-      font-size: 13px;
-      text-align: center;
-    }
-
-    /* QR-Anzeige für Lagerplatz */
     .platz-qr-box {
-      margin-top: 8px;
+      margin-top: 6px;
       text-align: center;
     }
     .platz-qr-box img {
@@ -208,61 +167,39 @@
 </head>
 <body>
   <header>
-    Bestand Lager – ETS (lokale App)
+    ETS Lager App – Mobile (ohne Kamera)
   </header>
 
-  <!-- Scanner-Overlay -->
-  <div id="scannerOverlay" class="scanner-overlay" hidden>
-    <div class="scanner-inner">
-      <video id="scannerVideo" playsinline></video>
-      <div class="scanner-hint" id="scannerHint">
-        Halte den Barcode oder QR-Code ins Kamerabild. Sobald er erkannt wird, wird der Wert übernommen.
-      </div>
-      <button type="button" class="secondary" id="closeScannerBtn">Abbrechen</button>
-    </div>
-  </div>
-
   <main>
-    <!-- BUCHUNGSFORMULAR -->
+    <!-- BUCHUNG -->
     <section class="card">
       <h2>Buchung erfassen</h2>
       <form id="bookingForm">
         <div class="form-grid">
-          <!-- LAGERPLATZ -->
           <div>
             <label for="lagerplatz">Lagerplatz</label>
-            <div class="inline-field">
-              <input id="lagerplatz" type="text" placeholder="z.B. R01-A-01 oder Kommission Maier" required />
-              <button type="button" class="secondary" id="scanPlaceBtn">Platz scannen</button>
-            </div>
+            <input id="lagerplatz" type="text" placeholder="z.B. R01-A-01 oder Kommission Maier" required />
             <div class="platz-qr-box">
               <button type="button" class="secondary" id="showPlaceQrBtn">QR für Lagerplatz anzeigen</button>
               <div id="platzQrContainer"></div>
             </div>
           </div>
 
-          <!-- ARTIKELNUMMER -->
           <div>
             <label for="artikelnummer">Artikelnummer</label>
-            <div class="inline-field">
-              <input id="artikelnummer" type="text" placeholder="Artikelnummer / EAN" required />
-              <button type="button" class="secondary" id="scanBarcodeBtn">Scannen</button>
-            </div>
+            <input id="artikelnummer" type="text" placeholder="Artikelnummer / EAN (mit Handscanner)" required />
           </div>
 
-          <!-- BEZEICHNUNG -->
           <div>
             <label for="bezeichnung">Bezeichnung</label>
             <input id="bezeichnung" type="text" placeholder="z.B. ABB S203 C16" />
           </div>
 
-          <!-- MENGE -->
           <div>
             <label for="menge">Menge</label>
             <input id="menge" type="number" min="0" step="1" required />
           </div>
 
-          <!-- BUCHUNGSTYP -->
           <div>
             <label for="buchungstyp">Buchungstyp</label>
             <select id="buchungstyp" required>
@@ -272,10 +209,9 @@
             </select>
           </div>
 
-          <!-- REFERENZ -->
           <div>
             <label for="referenz">Referenz / Kommission</label>
-            <input id="referenz" type="text" placeholder="z.B. Kommission Maier, Lieferschein-Nr." />
+            <input id="referenz" type="text" placeholder="z.B. Kommission Maier, Lieferschein" />
           </div>
         </div>
 
@@ -284,12 +220,13 @@
           <button type="button" class="secondary" id="resetFormBtn">Formular leeren</button>
         </div>
         <div class="footer-note">
-          Daten werden im Browser gespeichert (localStorage) und gehen nicht verloren, wenn du die Seite neu lädst.
+          Tipp: Cursor ins Feld „Artikelnummer“ setzen und dann mit dem Handscanner scannen.
+          Daten werden lokal im Browser gespeichert (localStorage).
         </div>
       </form>
     </section>
 
-    <!-- SUCHEN / EXPORT -->
+    <!-- SUCHE / EXPORT -->
     <section class="card">
       <h2>Bestand &amp; Suche</h2>
       <div class="search-row">
@@ -317,36 +254,27 @@
             </tr>
           </thead>
           <tbody id="inventoryTableBody">
-            <!-- Zeilen werden per JS gefüllt -->
+            <!-- JS füllt hier Zeilen -->
           </tbody>
         </table>
       </div>
       <div class="footer-note">
-        Hinweis: Die App rechnet Bestände aus allen Buchungen. Bei <span class="tag">Inventur</span> wird der Bestand direkt
-        auf die eingegebene Menge gesetzt.
+        Hinweis: Bei <span class="tag">Inventur</span> wird der Bestand direkt auf die eingegebene Menge gesetzt.
       </div>
     </section>
   </main>
 
   <script>
     (function () {
-      const STORAGE_KEY = "bestandLagerData_v1";
+      const STORAGE_KEY = "bestandLagerData_mobile_noScanner_v1";
       let inventory = [];
 
-      // ---- Lager-Daten aus localStorage ----
       function loadFromStorage() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) {
-            inventory = [];
-            return;
-          }
+          if (!raw) { inventory = []; return; }
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) {
-            inventory = parsed;
-          } else {
-            inventory = [];
-          }
+          inventory = Array.isArray(parsed) ? parsed : [];
         } catch (e) {
           console.error("Fehler beim Laden aus localStorage", e);
           inventory = [];
@@ -357,7 +285,6 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(inventory));
       }
 
-      // ---- Tabelle rendern ----
       function renderTable(filterText = "") {
         const tbody = document.getElementById("inventoryTableBody");
         tbody.innerHTML = "";
@@ -371,7 +298,7 @@
             }
             return a.lagerplatz.localeCompare(b.lagerplatz, "de");
           })
-          .filter((item) => {
+          .filter(item => {
             if (!ft) return true;
             return (
               (item.lagerplatz || "").toLowerCase().includes(ft) ||
@@ -380,7 +307,7 @@
             );
           });
 
-        rows.forEach((item) => {
+        rows.forEach(item => {
           const tr = document.createElement("tr");
 
           const tdPlatz = document.createElement("td");
@@ -408,13 +335,11 @@
         });
       }
 
-      // ---- Bestand berechnen / anpassen ----
       function upsertInventory({ lagerplatz, artikelnummer, bezeichnung, buchungstyp, menge, referenz }) {
         const key = (lagerplatz || "").trim().toLowerCase() + "§" + (artikelnummer || "").trim().toLowerCase();
         let existing = inventory.find(
-          (x) =>
-            (x.lagerplatz || "").trim().toLowerCase() + "§" +
-            (x.artikelnummer || "").trim().toLowerCase() === key
+          x => ((x.lagerplatz || "").trim().toLowerCase() + "§" +
+                (x.artikelnummer || "").trim().toLowerCase()) === key
         );
 
         if (buchungstyp === "Inventur") {
@@ -457,7 +382,6 @@
         saveToStorage();
       }
 
-      // ---- CSV-Export ----
       function exportCsv() {
         if (!inventory.length) {
           alert("Keine Daten zum Exportieren.");
@@ -466,7 +390,7 @@
         const header = ["Artikelnummer", "Bezeichnung", "Lagerplatz", "Menge", "Letzte Referenz"];
         const lines = [header.join(";")];
 
-        inventory.forEach((item) => {
+        inventory.forEach(item => {
           const row = [
             (item.artikelnummer || "").replace(/;/g, ","),
             (item.bezeichnung || "").replace(/;/g, ","),
@@ -483,7 +407,7 @@
         const now = new Date();
         const isoDate = now.toISOString().slice(0, 10);
         a.href = url;
-        a.download = "bestand_lager_" + isoDate + ".csv";
+        a.download = "bestand_lager_mobile_" + isoDate + ".csv";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -497,7 +421,6 @@
         renderTable(document.getElementById("searchInput").value);
       }
 
-      // ---- QR für Lagerplatz erzeugen (über Google Charts API) ----
       function showPlaceQr() {
         const platz = document.getElementById("lagerplatz").value.trim();
         const container = document.getElementById("platzQrContainer");
@@ -506,117 +429,14 @@
           alert("Bitte zuerst einen Lagerplatz eingeben (z.B. Kommission Maier).");
           return;
         }
-        // Payload: nur der Lagerplatz-Text
-        const payload = platz;
         const img = document.createElement("img");
         img.alt = "QR-Code für Lagerplatz";
         img.src =
           "https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=" +
-          encodeURIComponent(payload);
+          encodeURIComponent(platz);
         container.appendChild(img);
       }
 
-      // ---- Barcode- & QR-Scanner ----
-      let barcodeDetector = null;
-      let scannerStream = null;
-      let scanning = false;
-      let scanTarget = "artikel"; // "artikel" oder "platz"
-      const scanCanvas = document.createElement("canvas");
-      const scanCtx = scanCanvas.getContext("2d");
-
-      if ("BarcodeDetector" in window) {
-        barcodeDetector = new BarcodeDetector({
-          formats: [
-            "code_128",
-            "ean_13",
-            "ean_8",
-            "upc_a",
-            "upc_e",
-            "code_39",
-            "qr_code"
-          ]
-        });
-      }
-
-      async function startScanner(target) {
-        if (!barcodeDetector) {
-          alert("Dein Browser unterstützt den eingebauten Barcode/QR-Scanner nicht. Aktualisiere iOS/Browser oder nutze einen Handscanner.");
-          return;
-        }
-        scanTarget = target;
-        const overlay = document.getElementById("scannerOverlay");
-        const video = document.getElementById("scannerVideo");
-        const hint = document.getElementById("scannerHint");
-
-        if (scanTarget === "artikel") {
-          hint.textContent = "Halte den Artikel-Barcode ins Kamerabild. Sobald er erkannt wird, wird die Artikelnummer übernommen.";
-        } else {
-          hint.textContent = "Halte den Lagerplatz-QR-Code ins Kamerabild. Sobald er erkannt wird, wird der Lagerplatz übernommen.";
-        }
-
-        overlay.hidden = false;
-
-        try {
-          scannerStream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: "environment" }
-          });
-          video.srcObject = scannerStream;
-          await video.play();
-          scanning = true;
-          requestAnimationFrame(scanFrame);
-        } catch (err) {
-          console.error(err);
-          alert("Kamera-Zugriff nicht möglich. Bitte Berechtigung prüfen.");
-          stopScanner();
-        }
-      }
-
-      function stopScanner() {
-        scanning = false;
-        const overlay = document.getElementById("scannerOverlay");
-        overlay.hidden = true;
-        if (scannerStream) {
-          scannerStream.getTracks().forEach((t) => t.stop());
-          scannerStream = null;
-        }
-      }
-
-      async function scanFrame() {
-        if (!scanning) return;
-        const video = document.getElementById("scannerVideo");
-        if (video.readyState !== video.HAVE_ENOUGH_DATA) {
-          requestAnimationFrame(scanFrame);
-          return;
-        }
-
-        scanCanvas.width = video.videoWidth;
-        scanCanvas.height = video.videoHeight;
-        scanCtx.drawImage(video, 0, 0, scanCanvas.width, scanCanvas.height);
-
-        try {
-          const bitmap = await createImageBitmap(scanCanvas);
-          const codes = await barcodeDetector.detect(bitmap);
-          if (codes && codes.length > 0) {
-            const code = codes[0].rawValue;
-            if (scanTarget === "artikel") {
-              document.getElementById("artikelnummer").value = code;
-              stopScanner();
-              document.getElementById("menge").focus();
-            } else {
-              document.getElementById("lagerplatz").value = code;
-              stopScanner();
-              document.getElementById("artikelnummer").focus();
-            }
-            return;
-          }
-        } catch (e) {
-          console.error("Fehler beim Dekodieren", e);
-        }
-
-        requestAnimationFrame(scanFrame);
-      }
-
-      // ---- Initialisierung ----
       document.addEventListener("DOMContentLoaded", () => {
         loadFromStorage();
         renderTable();
@@ -668,13 +488,6 @@
 
         document.getElementById("exportCsvBtn").addEventListener("click", exportCsv);
         document.getElementById("clearAllBtn").addEventListener("click", clearAllData);
-
-        // Scanner-Buttons
-        document.getElementById("scanBarcodeBtn").addEventListener("click", () => startScanner("artikel"));
-        document.getElementById("scanPlaceBtn").addEventListener("click", () => startScanner("platz"));
-        document.getElementById("closeScannerBtn").addEventListener("click", stopScanner);
-
-        // QR-Anzeige für Lagerplatz
         document.getElementById("showPlaceQrBtn").addEventListener("click", showPlaceQr);
       });
     })();
