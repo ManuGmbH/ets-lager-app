@@ -2,571 +2,214 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>ETS Lager App – PC-Version</title>
+  <title>ETS Lager App – Mobile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      background: #f4f5f7;
-      color: #222;
-    }
-    header {
-      background: #0b5ed7;
-      color: #fff;
-      padding: 14px 24px;
-      font-size: 20px;
-      font-weight: 600;
-    }
-    main {
-      max-width: 1200px;
-      margin: 16px auto 32px;
-      padding: 0 16px;
-      display: grid;
-      grid-template-columns: minmax(340px, 420px) minmax(0, 1fr);
-      gap: 16px;
-    }
-    .card {
-      background: #fff;
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    }
-    .card h2 {
-      margin: 0 0 10px;
-      font-size: 18px;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 10px;
-      margin-bottom: 10px;
-    }
-    .form-grid > div {
-      min-width: 0;
-    }
-    label {
-      font-size: 13px;
-      font-weight: 600;
-      display: block;
-      margin-bottom: 2px;
-    }
-    input[type="text"],
-    input[type="number"],
-    select {
-      width: 100%;
-      padding: 6px 8px;
-      border-radius: 4px;
-      border: 1px solid #ccd0d5;
-      font-size: 14px;
-      background: #fff;
-    }
-    input[type="number"] {
-      -moz-appearance: textfield;
-    }
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    button {
-      padding: 8px 13px;
-      border-radius: 4px;
-      border: none;
-      font-size: 14px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      text-align: center;
-    }
-    button.primary {
-      background: #0b5ed7;
-      color: #fff;
-    }
-    button.secondary {
-      background: #e4e6eb;
-      color: #222;
-    }
-    button.danger {
-      background: #dc3545;
-      color: #fff;
-    }
-    button:active {
-      transform: scale(0.97);
-    }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 4px;
-    }
-    .search-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-    .search-row input[type="text"] {
-      flex: 1;
-      min-width: 160px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    thead {
-      background: #f0f2f5;
-    }
-    th, td {
-      padding: 6px 6px;
-      border-bottom: 1px solid #e4e6eb;
-      text-align: left;
-      vertical-align: middle;
-    }
-    th {
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    tbody tr:nth-child(even) {
-      background: #fafbfc;
-    }
-    .qty {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
-    .tag {
-      display: inline-block;
-      padding: 2px 6px;
-      border-radius: 999px;
-      background: #e7f1ff;
-      color: #0b5ed7;
-      font-size: 11px;
-    }
-    .footer-note {
-      font-size: 11px;
-      color: #666;
-      margin-top: 4px;
-    }
-    .platz-qr-box {
-      margin-top: 6px;
-      text-align: center;
-    }
-    .platz-qr-box button {
-      margin: 2px 0;
-      width: 100%;
-      max-width: 220px;
-      justify-content: center;
-    }
-    .platz-qr-box img {
-      margin-top: 6px;
-      max-width: 200px;
-      width: 100%;
-      height: auto;
-      border-radius: 4px;
-      background: #fff;
-      padding: 4px;
-    }
-    @media (max-width: 900px) {
-      main {
-        grid-template-columns: 1fr;
-      }
-    }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; padding: 0; background: #f4f5f7; color: #222; }
+    header { background: #0b5ed7; color: #fff; padding: 12px 16px; text-align: center; font-weight: 600; letter-spacing: 0.5px; }
+    main { max-width: 900px; margin: 12px auto 24px; padding: 0 10px; }
+    .card { background: #fff; border-radius: 8px; padding: 14px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .card h2 { margin-top: 0; margin-bottom: 10px; font-size: 18px; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px 10px; margin-bottom: 10px; }
+    label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 2px; }
+    input, select { width: 100%; padding: 6px 8px; border-radius: 4px; border: 1px solid #ccd0d5; font-size: 14px; }
+    button { padding: 8px 13px; border-radius: 4px; border: none; font-size: 14px; cursor: pointer; display: inline-block; margin: 2px 0; }
+    .primary { background: #0b5ed7; color: #fff; }
+    .secondary { background: #e4e6eb; color: #222; }
+    .danger { background: #dc3545; color: #fff; }
+    #platzQrContainer img { margin-top: 6px; max-width: 200px; width: 100%; padding: 4px; background: white; border-radius: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 6px; border-bottom: 1px solid #ccc; text-align: left; }
+    .qty { text-align: right; }
   </style>
 </head>
 <body>
-  <header>
-    ETS Lager App – PC-Version (ohne Kamera)
-  </header>
+  <header>ETS Lager App – Mobile (ohne Kamera)</header>
 
   <main>
-    <section>
-      <div class="card">
-        <h2>Buchung erfassen</h2>
-        <form id="bookingForm">
-          <div class="form-grid">
-            <div>
-              <label for="lagerplatz">Lagerplatz</label>
-              <input id="lagerplatz" type="text" placeholder="z.B. R01-A-01 oder Kommission Maier" required />
-              <div class="platz-qr-box">
-                <button type="button" class="secondary" id="showPlaceQrBtn">QR für Lagerplatz anzeigen</button>
-                <button type="button" class="secondary" id="printPlaceLabelBtn">Etikett drucken</button>
-                <div id="platzQrContainer"></div>
-              </div>
-            </div>
-
-            <div>
-              <label for="artikelnummer">Artikelnummer</label>
-              <input id="artikelnummer" type="text" placeholder="Artikelnummer / EAN (Scanner/Tastatur)" required />
-            </div>
-
-            <div>
-              <label for="bezeichnung">Bezeichnung</label>
-              <input id="bezeichnung" type="text" placeholder="z.B. ABB S203 C16" />
-            </div>
-
-            <div>
-              <label for="menge">Menge</label>
-              <input id="menge" type="number" min="0" step="1" required />
-            </div>
-
-            <div>
-              <label for="buchungstyp">Buchungstyp</label>
-              <select id="buchungstyp" required>
-                <option value="Zugang">Zugang (+)</option>
-                <option value="Abgang">Abgang (–)</option>
-                <option value="Inventur">Inventur (Bestand setzen)</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="referenz">Referenz / Kommission</label>
-              <input id="referenz" type="text" placeholder="z.B. Kommission Maier, Lieferschein" />
-            </div>
+    <section class="card">
+      <h2>Buchung erfassen</h2>
+      <form id="bookingForm" onsubmit="submitBooking(event)">
+        <div class="form-grid">
+          <div>
+            <label>Lagerplatz</label>
+            <input id="lagerplatz" type="text" required placeholder="z.B. R01-A-01 oder Kommission Maier">
+            <button type="button" class="secondary" onclick="showPlaceQr()">QR für Lagerplatz anzeigen</button>
+            <button type="button" class="secondary" onclick="printPlaceLabel()">Etikett drucken</button>
+            <div id="platzQrContainer"></div>
           </div>
 
-          <div class="actions">
-            <button type="submit" class="primary">Buchen</button>
-            <button type="button" class="secondary" id="resetFormBtn">Formular leeren</button>
+          <div>
+            <label>Artikelnummer</label>
+            <input id="artikelnummer" required type="text">
           </div>
-          <div class="footer-note">
-            Tipp: Cursor ins Feld „Artikelnummer“ setzen und dann mit Handscanner oder Tastatur erfassen.
-            Daten werden lokal im Browser gespeichert (localStorage).
-          </div>
-        </form>
-      </div>
 
-      <div class="card">
-        <h2>Bestand &amp; Suche</h2>
-        <div class="search-row">
-          <input id="searchInput" type="text" placeholder="Suche nach Artikelnummer, Bezeichnung oder Lagerplatz..." />
-          <button type="button" class="secondary" id="clearSearchBtn">Suche löschen</button>
+          <div>
+            <label>Bezeichnung</label>
+            <input id="bezeichnung" type="text">
+          </div>
+
+          <div>
+            <label>Menge</label>
+            <input id="menge" type="number" required>
+          </div>
+
+          <div>
+            <label>Buchungstyp</label>
+            <select id="buchungstyp">
+              <option value="Zugang">Zugang (+)</option>
+              <option value="Abgang">Abgang (-)</option>
+              <option value="Inventur">Inventur</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Referenz</label>
+            <input id="referenz" type="text">
+          </div>
         </div>
-        <div class="actions" style="margin-top:10px;">
-          <button type="button" class="secondary" id="exportCsvBtn">Als CSV für Excel exportieren</button>
-          <button type="button" class="danger" id="clearAllBtn">Alle Daten löschen</button>
-        </div>
-      </div>
+
+        <button class="primary" type="submit">Buchen</button>
+        <button type="button" class="secondary" onclick="resetForm()">Formular leeren</button>
+      </form>
     </section>
 
-    <section>
-      <div class="card">
-        <h2>Aktueller Bestand</h2>
-        <div style="overflow-x:auto; max-height: 70vh; overflow-y:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>Lagerplatz</th>
-                <th>Artikelnummer</th>
-                <th>Bezeichnung</th>
-                <th class="qty">Menge</th>
-                <th>Letzte Referenz</th>
-              </tr>
-            </thead>
-            <tbody id="inventoryTableBody"></tbody>
-          </table>
-        </div>
-        <div class="footer-note">
-          Hinweis: Bei <span class="tag">Inventur</span> wird der Bestand direkt auf die eingegebene Menge gesetzt.
-        </div>
-      </div>
+    <section class="card">
+      <h2>Bestand</h2>
+      <input id="searchInput" type="text" placeholder="Suche..." oninput="renderTable()">
+      <button type="button" class="secondary" onclick="exportCsv()">CSV exportieren</button>
+      <button type="button" class="danger" onclick="clearAllData()">Alle Daten löschen</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Lagerplatz</th>
+            <th>Artikelnummer</th>
+            <th>Bezeichnung</th>
+            <th class="qty">Menge</th>
+            <th>Referenz</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryTableBody"></tbody>
+      </table>
     </section>
   </main>
 
-  <script>
-    (function () {
-      const STORAGE_KEY = "bestandLagerData_mobile_noScanner_v1"; // gleich wie Mobile, damit Logik identisch bleibt
-      let inventory = [];
+<script>
+let STORAGE_KEY = "ets_mobile_store";
+let inventory = [];
 
-      function loadFromStorage() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) { inventory = []; return; }
-          const parsed = JSON.parse(raw);
-          inventory = Array.isArray(parsed) ? parsed : [];
-        } catch (e) {
-          console.error("Fehler beim Laden aus localStorage", e);
-          inventory = [];
-        }
-      }
+function loadFromStorage(){
+  let data = localStorage.getItem(STORAGE_KEY);
+  inventory = data ? JSON.parse(data) : [];
+}
+function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(inventory)); }
 
-      function saveToStorage() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(inventory));
-      }
+function submitBooking(e){
+  e.preventDefault();
+  let platz = lagerplatz.value.trim();
+  let art = artikelnummer.value.trim();
+  let bez = bezeichnung.value.trim();
+  let qty = parseInt(menge.value);
+  let typ = buchungstyp.value;
+  let ref = referenz.value.trim();
 
-      function renderTable(filterText = "") {
-        const tbody = document.getElementById("inventoryTableBody");
-        tbody.innerHTML = "";
-        const ft = filterText.trim().toLowerCase();
+  if(!platz || !art || isNaN(qty)){ alert("Bitte alle Felder korrekt ausfüllen."); return; }
 
-        const rows = inventory
-          .slice()
-          .sort((a, b) => {
-            if (a.lagerplatz === b.lagerplatz) {
-              return a.artikelnummer.localeCompare(b.artikelnummer, "de");
-            }
-            return a.lagerplatz.localeCompare(b.lagerplatz, "de");
-          })
-          .filter(item => {
-            if (!ft) return true;
-            return (
-              (item.lagerplatz || "").toLowerCase().includes(ft) ||
-              (item.artikelnummer || "").toLowerCase().includes(ft) ||
-              (item.bezeichnung || "").toLowerCase().includes(ft)
-            );
-          });
+  let key = platz+"§"+art;
+  let item = inventory.find(i=>i.key===key);
 
-        rows.forEach(item => {
-          const tr = document.createElement("tr");
+  if(!item){
+    item = { key, lagerplatz:platz, artikelnummer:art, bezeichnung:bez, menge:0, referenz:"" };
+    inventory.push(item);
+  }
 
-          const tdPlatz = document.createElement("td");
-          tdPlatz.textContent = item.lagerplatz || "";
-          tr.appendChild(tdPlatz);
+  if(typ==="Zugang") item.menge += qty;
+  if(typ==="Abgang") item.menge -= qty;
+  if(typ==="Inventur") item.menge = qty;
 
-          const tdArt = document.createElement("td");
-          tdArt.textContent = item.artikelnummer || "";
-          tr.appendChild(tdArt);
+  item.menge = Math.max(0, item.menge);
+  item.bezeichnung = bez || item.bezeichnung;
+  item.referenz = ref;
 
-          const tdBez = document.createElement("td");
-          tdBez.textContent = item.bezeichnung || "";
-          tr.appendChild(tdBez);
+  save();
+  renderTable();
+  resetForm();
+}
 
-          const tdMenge = document.createElement("td");
-          tdMenge.textContent = item.menge.toString();
-          tdMenge.className = "qty";
-          tr.appendChild(tdMenge);
+function resetForm(){ bookingForm.reset(); }
 
-          const tdRef = document.createElement("td");
-          tdRef.textContent = item.letzteReferenz || "";
-          tr.appendChild(tdRef);
+function renderTable(){
+  let filter = searchInput.value.toLowerCase();
+  let tbody = document.getElementById("inventoryTableBody");
+  tbody.innerHTML = "";
 
-          tbody.appendChild(tr);
-        });
-      }
+  inventory
+    .filter(i =>
+      i.lagerplatz.toLowerCase().includes(filter) ||
+      i.artikelnummer.toLowerCase().includes(filter) ||
+      (i.bezeichnung||"").toLowerCase().includes(filter)
+    )
+    .forEach(i=>{
+      let tr=document.createElement("tr");
+      tr.innerHTML = `
+        <td>${i.lagerplatz}</td>
+        <td>${i.artikelnummer}</td>
+        <td>${i.bezeichnung||""}</td>
+        <td class="qty">${i.menge}</td>
+        <td>${i.referenz||""}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+}
 
-      function upsertInventory({ lagerplatz, artikelnummer, bezeichnung, buchungstyp, menge, referenz }) {
-        const key = (lagerplatz || "").trim().toLowerCase() + "§" + (artikelnummer || "").trim().toLowerCase();
-        let existing = inventory.find(
-          x => ((x.lagerplatz || "").trim().toLowerCase() + "§" +
-                (x.artikelnummer || "").trim().toLowerCase()) === key
-        );
+function clearAllData(){
+  if(confirm("Alles löschen?")){
+    inventory=[];
+    save();
+    renderTable();
+  }
+}
 
-        if (buchungstyp === "Inventur") {
-          const newQty = menge < 0 ? 0 : menge;
-          if (!existing) {
-            existing = {
-              id: Date.now(),
-              lagerplatz,
-              artikelnummer,
-              bezeichnung: bezeichnung || "",
-              menge: newQty,
-              letzteReferenz: referenz || ""
-            };
-            inventory.push(existing);
-          } else {
-            existing.menge = newQty;
-            if (bezeichnung) existing.bezeichnung = bezeichnung;
-            existing.letzteReferenz = referenz || existing.letzteReferenz;
-          }
-        } else {
-          const delta = buchungstyp === "Zugang" ? menge : -menge;
-          if (!existing) {
-            const startQty = Math.max(delta, 0);
-            existing = {
-              id: Date.now(),
-              lagerplatz,
-              artikelnummer,
-              bezeichnung: bezeichnung || "",
-              menge: startQty,
-              letzteReferenz: referenz || ""
-            };
-            inventory.push(existing);
-          } else {
-            const newQty = (existing.menge || 0) + delta;
-            existing.menge = newQty < 0 ? 0 : newQty;
-            if (bezeichnung) existing.bezeichnung = bezeichnung;
-            existing.letzteReferenz = referenz || existing.letzteReferenz;
-          }
-        }
-        saveToStorage();
-      }
+function exportCsv(){
+  let text = "Artikelnummer;Bezeichnung;Lagerplatz;Menge;Referenz\n";
+  inventory.forEach(i=>{
+    text += `${i.artikelnummer};${i.bezeichnung||""};${i.lagerplatz};${i.menge};${i.referenz||""}\n`;
+  });
+  let blob = new Blob([text],{type:"text/csv"});
+  let url = URL.createObjectURL(blob);
+  let a=document.createElement("a");
+  a.href=url;
+  a.download="bestand.csv";
+  a.click();
+}
 
-      function exportCsv() {
-        if (!inventory.length) {
-          alert("Keine Daten zum Exportieren.");
-          return;
-        }
-        const header = ["Artikelnummer", "Bezeichnung", "Lagerplatz", "Menge", "Letzte Referenz"];
-        const lines = [header.join(";")];
+function showPlaceQr(){
+  let platz = lagerplatz.value.trim();
+  if(!platz){ alert("Bitte Lagerplatz eingeben."); return; }
 
-        inventory.forEach(item => {
-          const row = [
-            (item.artikelnummer || "").replace(/;/g, ","),
-            (item.bezeichnung || "").replace(/;/g, ","),
-            (item.lagerplatz || "").replace(/;/g, ","),
-            item.menge.toString(),
-            (item.letzteReferenz || "").replace(/;/g, ",")
-          ];
-          lines.push(row.join(";"));
-        });
+  let container = document.getElementById("platzQrContainer");
+  container.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(platz)}">`;
+}
 
-        const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        const now = new Date();
-        const isoDate = now.toISOString().slice(0, 10);
-        a.href = url;
-        a.download = "bestand_lager_pc_" + isoDate + ".csv";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
+function printPlaceLabel(){
+  let platz = lagerplatz.value.trim();
+  if(!platz){ alert("Bitte Lagerplatz eingeben."); return; }
 
-      function clearAllData() {
-        if (!confirm("Wirklich alle Bestände in dieser App löschen? (Nur lokal im Browser)")) return;
-        inventory = [];
-        saveToStorage();
-        renderTable(document.getElementById("searchInput").value);
-      }
+  let qr = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(platz)}`;
+  let w = window.open("","_blank");
 
-      function showPlaceQr() {
-        const platz = document.getElementById("lagerplatz").value.trim();
-        const container = document.getElementById("platzQrContainer");
-        container.innerHTML = "";
-        if (!platz) {
-          alert("Bitte zuerst einen Lagerplatz eingeben (z.B. Kommission Maier).");
-          return;
-        }
-        const img = document.createElement("img");
-        img.alt = "QR-Code für Lagerplatz";
-        img.src =
-          "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
-          encodeURIComponent(platz);
-        container.appendChild(img);
-      }
-
-      function printPlaceLabel() {
-        const platz = document.getElementById("lagerplatz").value.trim();
-        if (!platz) {
-          alert("Bitte zuerst einen Lagerplatz eingeben (z.B. R01-A-01 oder Kommission Maier).");
-          return;
-        }
-
-        const qrUrl =
-          "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=" +
-          encodeURIComponent(platz);
-
-        const win = window.open("", "_blank");
-        if (!win) {
-          alert("Popup blockiert. Bitte Popups für diese Seite erlauben.");
-          return;
-        }
-
-        win.document.write(`
-          <!DOCTYPE html>
-          <html lang="de">
-          <head>
-            <meta charset="UTF-8" />
-            <title>Etikett ${platz}</title>
-            <style>
-              body {
-                margin: 0;
-                padding: 20px;
-                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-                text-align: center;
-              }
-              .label {
-                display: inline-block;
-                padding: 10px 20px;
-              }
-              img {
-                width: 200px;
-                height: 200px;
-              }
-              .text {
-                margin-top: 10px;
-                font-size: 22px;
-                font-weight: 700;
-              }
-            </style>
-          </head>
-          <body>
-            <div class="label">
-              <img src="${qrUrl}" alt="QR ${platz}" />
-              <div class="text">${platz}</div>
-            </div>
-            <script>
-              window.print();
-            </script>
-          </body>
-          </html>
-        `);
-        win.document.close();
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        loadFromStorage();
-        renderTable();
-
-        const form = document.getElementById("bookingForm");
-        form.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const lagerplatz = document.getElementById("lagerplatz").value.trim();
-          const artikelnummer = document.getElementById("artikelnummer").value.trim();
-          const bezeichnung = document.getElementById("bezeichnung").value.trim();
-          const buchungstyp = document.getElementById("buchungstyp").value;
-          const referenz = document.getElementById("referenz").value.trim();
-          const mengeRaw = document.getElementById("menge").value;
-          const menge = parseInt(mengeRaw, 10);
-
-          if (!lagerplatz || !artikelnummer || !buchungstyp || isNaN(menge) || menge < 0) {
-            alert("Bitte alle Pflichtfelder korrekt ausfüllen.");
-            return;
-          }
-
-          upsertInventory({
-            lagerplatz,
-            artikelnummer,
-            bezeichnung,
-            buchungstyp,
-            menge,
-            referenz
-          });
-
-          renderTable(document.getElementById("searchInput").value);
-          form.reset();
-          document.getElementById("lagerplatz").focus();
-        });
-
-        document.getElementById("resetFormBtn").addEventListener("click", () => {
-          form.reset();
-          document.getElementById("lagerplatz").focus();
-        });
-
-        document.getElementById("searchInput").addEventListener("input", (e) => {
-          renderTable(e.target.value);
-        });
-
-        document.getElementById("clearSearchBtn").addEventListener("click", () => {
-          const input = document.getElementById("searchInput");
-          input.value = "";
-          renderTable("");
-        });
-
-        document.getElementById("exportCsvBtn").addEventListener("click", exportCsv);
-        document.getElementById("clearAllBtn").addEventListener("click", clearAllData);
-        document.getElementById("showPlaceQrBtn").addEventListener("click", showPlaceQr);
-        document.getElementById("printPlaceLabelBtn").addEventListener("click", printPlaceLabel);
-      });
-    })();
-  </script>
+  w.document.write(`
+    <html><body style="text-align:center;font-family:sans-serif;">
+      <img src="${qr}" style="width:200px;height:200px;"><br>
+      <h2>${platz}</h2>
+      <script>window.print();</script>
+    </body></html>
+  `);
+}
+loadFromStorage();
+renderTable();
+</script>
 </body>
 </html>
